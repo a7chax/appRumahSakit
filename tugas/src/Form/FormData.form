@@ -34,6 +34,8 @@
         <Property name="text" type="java.lang.String" value="jCheckBox1"/>
       </Properties>
     </Component>
+    <Component class="javax.swing.ButtonGroup" name="buttonGroup2">
+    </Component>
   </NonVisualComponents>
   <Properties>
     <Property name="closable" type="boolean" value="true"/>
@@ -87,7 +89,7 @@
                   </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="jScrollPane1" pref="472" max="32767" attributes="0"/>
+              <Component id="jScrollPane1" pref="478" max="32767" attributes="0"/>
               <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
           </Group>
           <Group type="102" alignment="0" attributes="0">
@@ -304,11 +306,10 @@
         <Component class="javax.swing.JComboBox" name="jComboJenisKelaminPasien">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="4">
-                <StringItem index="0" value="Item 1"/>
-                <StringItem index="1" value="Item 2"/>
-                <StringItem index="2" value="Item 3"/>
-                <StringItem index="3" value="Item 4"/>
+              <StringArray count="3">
+                <StringItem index="0" value="Pria"/>
+                <StringItem index="1" value="Wanita"/>
+                <StringItem index="2" value=" "/>
               </StringArray>
             </Property>
           </Properties>
@@ -324,11 +325,9 @@
         <Component class="javax.swing.JComboBox" name="jComboStatusPasien">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="4">
-                <StringItem index="0" value="Item 1"/>
-                <StringItem index="1" value="Item 2"/>
-                <StringItem index="2" value="Item 3"/>
-                <StringItem index="3" value="Item 4"/>
+              <StringArray count="2">
+                <StringItem index="0" value="Belum menikah"/>
+                <StringItem index="1" value="Menikah"/>
               </StringArray>
             </Property>
           </Properties>
@@ -498,24 +497,24 @@
                       <Component id="jLabel17" alignment="0" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabel18" alignment="0" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace min="-2" pref="53" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
-                          <Component id="jCheckBox2" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jCheckBox4" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jCheckBox3" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="32767" attributes="0"/>
-                      </Group>
-                      <Group type="102" attributes="0">
+                          <EmptySpace min="-2" pref="53" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="jComboJenisRawatPasien" min="-2" max="-2" attributes="0"/>
                               <Component id="txtDokterPasien" alignment="0" min="-2" pref="165" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
+                          <Component id="rButtonUmum" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="rButtonLab" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="rButtonUGD" min="-2" max="-2" attributes="0"/>
                       </Group>
                   </Group>
+                  <EmptySpace min="0" pref="12" max="32767" attributes="0"/>
               </Group>
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="131" max="-2" attributes="0"/>
@@ -534,11 +533,11 @@
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel16" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jCheckBox4" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jCheckBox2" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jCheckBox3" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="rButtonUmum" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="rButtonLab" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="rButtonUGD" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace pref="14" max="32767" attributes="0"/>
+                  <EmptySpace pref="18" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="txtDokterPasien" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabel17" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -599,19 +598,19 @@
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
           </AuxValues>
         </Component>
-        <Component class="javax.swing.JCheckBox" name="jCheckBox2">
+        <Component class="javax.swing.JRadioButton" name="rButtonUmum">
           <Properties>
             <Property name="text" type="java.lang.String" value="Umum"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JCheckBox" name="jCheckBox3">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="UGD"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JCheckBox" name="jCheckBox4">
+        <Component class="javax.swing.JRadioButton" name="rButtonLab">
           <Properties>
             <Property name="text" type="java.lang.String" value="Lab"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JRadioButton" name="rButtonUGD">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="UGD"/>
           </Properties>
         </Component>
       </SubComponents>

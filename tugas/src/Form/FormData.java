@@ -7,6 +7,8 @@ package Form;
 
 import javax.swing.table.DefaultTableModel;
 import java.sql.*;
+import javax.swing.JOptionPane;
+
 
 /**
  *
@@ -22,6 +24,7 @@ public class FormData extends javax.swing.JInternalFrame {
     //consturctor
     public FormData() {
         initComponents();
+        loadData();
     }
     
     private void loadData(){
@@ -38,11 +41,14 @@ public class FormData extends javax.swing.JInternalFrame {
         model.addColumn("Nama Wali");
         model.addColumn("No.telp");
         
+        model.getDataVector().removeAllElements();
+        model.fireTableDataChanged();
+        
         try {
             Connection c = konek.getKoneksi();
             Statement s = c.createStatement();
             
-            String sql = "SELECT * FROM appPasienRawatJalan";
+            String sql = "SELECT * FROM dbDataPasien";
             
             ResultSet rs = s.executeQuery(sql);
             
@@ -57,9 +63,11 @@ public class FormData extends javax.swing.JInternalFrame {
                 obj[5] = rs.getString("statusPasien");
                 obj[6] = rs.getString("namaWaliPasien");
                 obj[7] = rs.getString("noTelpPasien");
+                
+                model.addRow(obj);
             }
         } catch (SQLException e) {
-            
+            e.printStackTrace();
         }
         
     }
@@ -78,6 +86,7 @@ public class FormData extends javax.swing.JInternalFrame {
         jLabel10 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         jCheckBox1 = new javax.swing.JCheckBox();
+        buttonGroup2 = new javax.swing.ButtonGroup();
         jLabel1 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
@@ -114,9 +123,9 @@ public class FormData extends javax.swing.JInternalFrame {
         jSeparator1 = new javax.swing.JSeparator();
         txtDokterPasien = new javax.swing.JTextField();
         jComboJenisRawatPasien = new javax.swing.JComboBox<>();
-        jCheckBox2 = new javax.swing.JCheckBox();
-        jCheckBox3 = new javax.swing.JCheckBox();
-        jCheckBox4 = new javax.swing.JCheckBox();
+        rButtonUmum = new javax.swing.JRadioButton();
+        rButtonLab = new javax.swing.JRadioButton();
+        rButtonUGD = new javax.swing.JRadioButton();
         btnSubmit = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
@@ -172,11 +181,11 @@ public class FormData extends javax.swing.JInternalFrame {
 
         txtNoKartuIdentitasPasien.setText("jTextField3");
 
-        jComboJenisKelaminPasien.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboJenisKelaminPasien.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pria", "Wanita", " " }));
 
         txtTempatTanggalLahirPasien.setText("ex: Jakarta,31,12,2019");
 
-        jComboStatusPasien.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboStatusPasien.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Belum menikah", "Menikah" }));
 
         txtNamaWaliPasien.setText("jTextField5");
 
@@ -359,11 +368,11 @@ public class FormData extends javax.swing.JInternalFrame {
 
         jComboJenisRawatPasien.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        jCheckBox2.setText("Umum");
+        rButtonUmum.setText("Umum");
 
-        jCheckBox3.setText("UGD");
+        rButtonLab.setText("Lab");
 
-        jCheckBox4.setText("Lab");
+        rButtonUGD.setText("UGD");
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -376,20 +385,20 @@ public class FormData extends javax.swing.JInternalFrame {
                     .addComponent(jLabel16)
                     .addComponent(jLabel17)
                     .addComponent(jLabel18))
-                .addGap(53, 53, 53)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addComponent(jCheckBox2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jCheckBox4)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jCheckBox3)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addGap(53, 53, 53)
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jComboJenisRawatPasien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtDokterPasien, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                            .addComponent(txtDokterPasien, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addGap(39, 39, 39)
+                        .addComponent(rButtonUmum)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(rButtonLab)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(rButtonUGD)))
+                .addGap(0, 12, Short.MAX_VALUE))
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addGap(131, 131, 131)
                 .addComponent(jLabel19)
@@ -405,10 +414,10 @@ public class FormData extends javax.swing.JInternalFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel16)
-                    .addComponent(jCheckBox4)
-                    .addComponent(jCheckBox2)
-                    .addComponent(jCheckBox3))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 14, Short.MAX_VALUE)
+                    .addComponent(rButtonUmum)
+                    .addComponent(rButtonLab)
+                    .addComponent(rButtonUGD))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtDokterPasien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel17))
@@ -469,7 +478,7 @@ public class FormData extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnSubmit)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 472, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 478, Short.MAX_VALUE)
                 .addGap(18, 18, 18))
             .addGroup(layout.createSequentialGroup()
                 .addGap(272, 272, 272)
@@ -506,7 +515,7 @@ public class FormData extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtDokterPasienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDokterPasienActionPerformed
-        // TODO add your handling code here:
+   // TODO add your handling code here:
     }//GEN-LAST:event_txtDokterPasienActionPerformed
 
     private void btnSubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubmitActionPerformed
@@ -523,21 +532,79 @@ public class FormData extends javax.swing.JInternalFrame {
         String noTelpPenjaminPasien = txtNoTelpPenjaminPasien.getText();
         String namaPetugasPasien = txtNamaPetugasPasien.getText();
         String shiftPetugasPasien = txtShiftPetugasPasien.getText();
-        /// Radio Button
+        //Radio Button below
+        String  checkUpPasien = "";
+            if(rButtonUmum.isSelected()){
+                checkUpPasien = "Umum";
+            } else if(rButtonLab.isSelected()){
+                checkUpPasien = "Lab";
+            } else if(rButtonUGD.isSelected()){
+                checkUpPasien = "UGD";
+            }
+        //end of radio button
         String dokterPasien = txtDokterPasien.getText();
         String jenisRawatPasien = String.valueOf(jComboJenisRawatPasien.getSelectedItem());        
+        
+        try {
+            Connection a = konek.getKoneksi();
+            String sql = "INSERT INTO dbDataPasien("
+                    + "namaPasien,"
+                    + " kartuIdentitasPasien,"
+                    + " noKartuIdentitasPasien,"
+                    + " jenisKelaminPasien,"
+                    + " tempatTanggalLahirPasien, "
+                    + "statusPasien, "
+                    + "namaWaliPasien, "
+                    + "noTelpPasien, "
+                    + "namaPenjaminPasien, "
+                    + "noTelpPenjaminPasien, "
+                    + "namaPetugasPasien, "
+                    + "shiftPetugasPasien, "
+                    + "checkUpPasien, "
+                    + "dokterPasien, "
+                    + "jenisRawatPasien) "
+                    + "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            
+            PreparedStatement p = a.prepareStatement(sql);
+            p.setString(1,namaPasien);
+            p.setString(2,kartuIdentitasPasien);
+            p.setString(3,noKartuIdentitasPasien);
+            p.setString(4,jenisKelaminPasien);
+            p.setString(5,tempatTanggalLahirPasien);
+            p.setString(6,statusPasien);
+            p.setString(7,namaWaliPasien);
+            p.setString(8,noTelpPasien);
+            p.setString(9,namaPenjaminPasien);
+            p.setString(10,noTelpPenjaminPasien);
+            p.setString(11,namaPetugasPasien);
+            p.setString(12,shiftPetugasPasien);
+            p.setString(13,checkUpPasien);
+            p.setString(14,dokterPasien);
+            p.setString(15,jenisRawatPasien);
+            
+            
+            p.executeUpdate();
+            
+        } catch (SQLException e) {
+            System.out.println("Gagal Input data");
+        }finally{
+            JOptionPane.showMessageDialog(rootPane,
+                    "Berhasil menyimpan data","berhasil",
+                    JOptionPane.INFORMATION_MESSAGE);
+            
+                    loadData();
+        }
     }//GEN-LAST:event_btnSubmitActionPerformed
+    
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSubmit;
     private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JCheckBox jCheckBox1;
-    private javax.swing.JCheckBox jCheckBox2;
-    private javax.swing.JCheckBox jCheckBox3;
-    private javax.swing.JCheckBox jCheckBox4;
     private javax.swing.JComboBox<String> jComboJenisKelaminPasien;
     private javax.swing.JComboBox<String> jComboJenisRawatPasien;
     private javax.swing.JComboBox<String> jComboStatusPasien;
@@ -567,6 +634,9 @@ public class FormData extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JRadioButton rButtonLab;
+    private javax.swing.JRadioButton rButtonUGD;
+    private javax.swing.JRadioButton rButtonUmum;
     private javax.swing.JTable tableDataPasien;
     private javax.swing.JTextField txtDokterPasien;
     private javax.swing.JTextField txtKartuIdentitasPasien;
