@@ -24,10 +24,10 @@ public class FormData extends javax.swing.JInternalFrame {
     //consturctor
     public FormData() {
         initComponents();
-        loadData();
+        loadData("");
     }
     
-    private void loadData(){
+    private void loadData(String Key){
         model = new DefaultTableModel();
         
         tableDataPasien.setModel(model);
@@ -48,8 +48,15 @@ public class FormData extends javax.swing.JInternalFrame {
             Connection c = konek.getKoneksi();
             Statement s = c.createStatement();
             
-            String sql = "SELECT * FROM dbDataPasien";
+            String sql = "";
             
+            if (Key.isEmpty()) {
+                sql = "SELECT * FROM dbDataPasien";
+            } else {
+                sql = "SELECT * FROM dbDataPasien WHERE namaPasien "
+                        + "LIKE '%"+ Key + "%'";
+            }
+                    
             ResultSet rs = s.executeQuery(sql);
             
             while (rs.next()) {                
@@ -131,6 +138,8 @@ public class FormData extends javax.swing.JInternalFrame {
         jButton3 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tableDataPasien = new javax.swing.JTable();
+        txtSearch = new javax.swing.JTextField();
+        btnCari = new javax.swing.JButton();
 
         jLabel11.setText("jLabel11");
 
@@ -175,21 +184,21 @@ public class FormData extends javax.swing.JInternalFrame {
 
         jLabel9.setText("No. Telp");
 
-        txtNamaPasien.setText("jTextField1");
-
-        txtKartuIdentitasPasien.setText("jTextField2");
-
-        txtNoKartuIdentitasPasien.setText("jTextField3");
-
         jComboJenisKelaminPasien.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pria", "Wanita", " " }));
 
-        txtTempatTanggalLahirPasien.setText("ex: Jakarta,31,12,2019");
+        txtTempatTanggalLahirPasien.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtTempatTanggalLahirPasienActionPerformed(evt);
+            }
+        });
 
         jComboStatusPasien.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Belum menikah", "Menikah" }));
 
-        txtNamaWaliPasien.setText("jTextField5");
-
-        txtNoTelpPasien.setText("t");
+        txtNamaWaliPasien.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNamaWaliPasienActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -205,34 +214,22 @@ public class FormData extends javax.swing.JInternalFrame {
                     .addComponent(jLabel7)
                     .addComponent(jLabel9)
                     .addComponent(jLabel8))
+                .addGap(20, 20, 20)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtNamaWaliPasien, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(20, 20, 20)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(jComboJenisKelaminPasien, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(txtNoKartuIdentitasPasien, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(txtKartuIdentitasPasien, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addContainerGap())))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtNamaWaliPasien)
-                            .addComponent(jComboStatusPasien, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtTempatTanggalLahirPasien, javax.swing.GroupLayout.DEFAULT_SIZE, 165, Short.MAX_VALUE)
-                            .addComponent(txtNoTelpPasien))
+                            .addComponent(jComboJenisKelaminPasien, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(txtNamaPasien, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtKartuIdentitasPasien, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtNoKartuIdentitasPasien, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtTempatTanggalLahirPasien, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jComboStatusPasien, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(txtNamaPasien, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())))
+                    .addComponent(txtNoTelpPasien))
+                .addContainerGap())
         );
-
-        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {txtKartuIdentitasPasien, txtNamaWaliPasien, txtNoKartuIdentitasPasien, txtNoTelpPasien, txtTempatTanggalLahirPasien});
-
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -268,7 +265,7 @@ public class FormData extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtNoTelpPasien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel9))
-                .addContainerGap(118, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel2.setBackground(new java.awt.Color(230, 223, 223));
@@ -277,9 +274,11 @@ public class FormData extends javax.swing.JInternalFrame {
 
         jLabel13.setText("No.telp penjamin");
 
-        txtNamaPenjaminPasien.setText("jTextField7");
-
-        txtNoTelpPenjaminPasien.setText("jTextField8");
+        txtNamaPenjaminPasien.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNamaPenjaminPasienActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -290,7 +289,7 @@ public class FormData extends javax.swing.JInternalFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel12)
                     .addComponent(jLabel13))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txtNoTelpPenjaminPasien)
                     .addComponent(txtNamaPenjaminPasien))
@@ -316,9 +315,17 @@ public class FormData extends javax.swing.JInternalFrame {
 
         jLabel15.setText("Shift");
 
-        txtNamaPetugasPasien.setText("jTextField9");
+        txtNamaPetugasPasien.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNamaPetugasPasienActionPerformed(evt);
+            }
+        });
 
-        txtShiftPetugasPasien.setText("jTextField10");
+        txtShiftPetugasPasien.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtShiftPetugasPasienActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -329,10 +336,10 @@ public class FormData extends javax.swing.JInternalFrame {
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel14)
                     .addComponent(jLabel15))
-                .addGap(38, 38, 38)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtShiftPetugasPasien)
-                    .addComponent(txtNamaPetugasPasien))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(txtNamaPetugasPasien, javax.swing.GroupLayout.DEFAULT_SIZE, 156, Short.MAX_VALUE)
+                    .addComponent(txtShiftPetugasPasien))
                 .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
@@ -359,7 +366,6 @@ public class FormData extends javax.swing.JInternalFrame {
 
         jLabel19.setText("Check");
 
-        txtDokterPasien.setText("jTextField11");
         txtDokterPasien.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtDokterPasienActionPerformed(evt);
@@ -387,18 +393,19 @@ public class FormData extends javax.swing.JInternalFrame {
                     .addComponent(jLabel18))
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addGap(53, 53, 53)
-                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jComboJenisRawatPasien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtDokterPasien, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel6Layout.createSequentialGroup()
                         .addGap(39, 39, 39)
                         .addComponent(rButtonUmum)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(rButtonLab)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(rButtonUGD)))
-                .addGap(0, 12, Short.MAX_VALUE))
+                        .addComponent(rButtonUGD)
+                        .addGap(0, 6, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jComboJenisRawatPasien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txtDokterPasien, javax.swing.GroupLayout.PREFERRED_SIZE, 147, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addContainerGap())))
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addGap(131, 131, 131)
                 .addComponent(jLabel19)
@@ -422,10 +429,10 @@ public class FormData extends javax.swing.JInternalFrame {
                     .addComponent(txtDokterPasien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel17))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel18)
                     .addComponent(jComboJenisRawatPasien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(33, 33, 33))
+                .addGap(38, 38, 38))
         );
 
         btnSubmit.setText("Submit");
@@ -451,35 +458,55 @@ public class FormData extends javax.swing.JInternalFrame {
             }
         ));
         tableDataPasien.setEditingColumn(6);
+        tableDataPasien.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tableDataPasienMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(tableDataPasien);
+
+        txtSearch.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtSearchKeyReleased(evt);
+            }
+        });
+
+        btnCari.setText("Cari");
+        btnCari.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCariActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jButton2)
+                        .addGap(74, 74, 74)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 329, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton2)))
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(35, 35, 35)
                         .addComponent(jButton3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnSubmit)))
+                        .addComponent(btnSubmit))
+                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 478, Short.MAX_VALUE)
-                .addGap(18, 18, 18))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnCari)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 495, Short.MAX_VALUE))
+                .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addGap(272, 272, 272)
                 .addComponent(jLabel1)
@@ -490,9 +517,9 @@ public class FormData extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -500,15 +527,21 @@ public class FormData extends javax.swing.JInternalFrame {
                                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(jButton3)
-                                .addComponent(btnSubmit))
-                            .addComponent(jButton2)))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(151, Short.MAX_VALUE))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButton3)
+                            .addComponent(btnSubmit)
+                            .addComponent(jButton2))
+                        .addContainerGap(174, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnCari))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 484, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(50, 50, 50))))
         );
 
         pack();
@@ -520,68 +553,54 @@ public class FormData extends javax.swing.JInternalFrame {
 
     private void btnSubmitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubmitActionPerformed
         // TODO add your handling code here:
-        String namaPasien = txtNamaPasien.getText();
-        String kartuIdentitasPasien = txtKartuIdentitasPasien.getText();
-        String noKartuIdentitasPasien = txtNoKartuIdentitasPasien.getText();
-        String jenisKelaminPasien = String.valueOf(jComboJenisKelaminPasien.getSelectedItem());
-        String tempatTanggalLahirPasien = txtTempatTanggalLahirPasien.getText();
-        String statusPasien =  String.valueOf(jComboStatusPasien.getSelectedItem());
-        String namaWaliPasien = txtNamaWaliPasien.getText();
-        String noTelpPasien = txtNoTelpPasien.getText();
-        String namaPenjaminPasien = txtNamaPenjaminPasien.getText();
-        String noTelpPenjaminPasien = txtNoTelpPenjaminPasien.getText();
-        String namaPetugasPasien = txtNamaPetugasPasien.getText();
-        String shiftPetugasPasien = txtShiftPetugasPasien.getText();
+        String nama_pasien = txtNamaPasien.getText();
+        String kartu_identitas_pasien = txtKartuIdentitasPasien.getText();
+        String no_kartu_identitas_pasien = txtNoKartuIdentitasPasien.getText();
+        String jenis_kelamin_pasien = String.valueOf(jComboJenisKelaminPasien.getSelectedItem());
+        String tempat_tanggal_lahir_pasien = txtTempatTanggalLahirPasien.getText();
+        String status_pasien =  String.valueOf(jComboStatusPasien.getSelectedItem());
+        String nama_wali_pasien = txtNamaWaliPasien.getText();
+        String no_telp_pasien = txtNoTelpPasien.getText();
+        String nama_penjamin_pasien = txtNamaPenjaminPasien.getText();
+        String no_telp_penjamin_pasien = txtNoTelpPenjaminPasien.getText();
+        String nama_petugas_pasien = txtNamaPetugasPasien.getText();
+        String shift_petugas_pasien = txtShiftPetugasPasien.getText();
         //Radio Button below
-        String  checkUpPasien = "";
+        String  check_up_pasien = "";
             if(rButtonUmum.isSelected()){
-                checkUpPasien = "Umum";
+                check_up_pasien = "Umum";
             } else if(rButtonLab.isSelected()){
-                checkUpPasien = "Lab";
+                check_up_pasien = "Lab";
             } else if(rButtonUGD.isSelected()){
-                checkUpPasien = "UGD";
+                check_up_pasien = "UGD";
             }
         //end of radio button
-        String dokterPasien = txtDokterPasien.getText();
-        String jenisRawatPasien = String.valueOf(jComboJenisRawatPasien.getSelectedItem());        
+        String dokter_pasien = txtDokterPasien.getText();
+        String jenis_rawat_pasien = String.valueOf(jComboJenisRawatPasien.getSelectedItem());      
+        
+        
         
         try {
-            Connection a = konek.getKoneksi();
-            String sql = "INSERT INTO dbDataPasien("
-                    + "namaPasien,"
-                    + " kartuIdentitasPasien,"
-                    + " noKartuIdentitasPasien,"
-                    + " jenisKelaminPasien,"
-                    + " tempatTanggalLahirPasien, "
-                    + "statusPasien, "
-                    + "namaWaliPasien, "
-                    + "noTelpPasien, "
-                    + "namaPenjaminPasien, "
-                    + "noTelpPenjaminPasien, "
-                    + "namaPetugasPasien, "
-                    + "shiftPetugasPasien, "
-                    + "checkUpPasien, "
-                    + "dokterPasien, "
-                    + "jenisRawatPasien) "
-                    + "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
+            Connection c = konek.getKoneksi();
+            String sql = "INSERT INTO dbDataPasien(`namaPasien`, `kartuIdentitasPasien`, `noKartuIdentitasPasien`, `jenisKelaminPasien`, `tempatTanggalLahirPasien`, `statusPasien`, `namaWaliPasien`, `noTelpPasien`, `namaPenjaminPasien`, `noTelpPenjaminPasien`, `namaPetugasPasien`, `shiftPetugasPasien`, `checkUpPasien`, `dokterPasien`, `jenisRawatPasien`) "
+                    + " VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)";
             
-            PreparedStatement p = a.prepareStatement(sql);
-            p.setString(1,namaPasien);
-            p.setString(2,kartuIdentitasPasien);
-            p.setString(3,noKartuIdentitasPasien);
-            p.setString(4,jenisKelaminPasien);
-            p.setString(5,tempatTanggalLahirPasien);
-            p.setString(6,statusPasien);
-            p.setString(7,namaWaliPasien);
-            p.setString(8,noTelpPasien);
-            p.setString(9,namaPenjaminPasien);
-            p.setString(10,noTelpPenjaminPasien);
-            p.setString(11,namaPetugasPasien);
-            p.setString(12,shiftPetugasPasien);
-            p.setString(13,checkUpPasien);
-            p.setString(14,dokterPasien);
-            p.setString(15,jenisRawatPasien);
-            
+            PreparedStatement p = c.prepareStatement(sql);
+            p.setString(1,nama_pasien);
+            p.setString(2,kartu_identitas_pasien);
+            p.setString(3,no_kartu_identitas_pasien);
+            p.setString(4,jenis_kelamin_pasien);
+            p.setString(5,tempat_tanggal_lahir_pasien);
+            p.setString(6,status_pasien);
+            p.setString(7,nama_wali_pasien);
+            p.setString(8,no_telp_pasien);
+            p.setString(9,nama_penjamin_pasien);
+            p.setString(10,no_telp_penjamin_pasien);
+            p.setString(11,nama_petugas_pasien);
+            p.setString(12,shift_petugas_pasien);
+            p.setString(13,check_up_pasien);
+            p.setString(14,dokter_pasien);
+            p.setString(15,jenis_rawat_pasien);
             
             p.executeUpdate();
             
@@ -592,13 +611,84 @@ public class FormData extends javax.swing.JInternalFrame {
                     "Berhasil menyimpan data","berhasil",
                     JOptionPane.INFORMATION_MESSAGE);
             
-                    loadData();
+                    loadData("");
         }
     }//GEN-LAST:event_btnSubmitActionPerformed
+
+    private void txtTempatTanggalLahirPasienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTempatTanggalLahirPasienActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtTempatTanggalLahirPasienActionPerformed
+
+    private void txtNamaWaliPasienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNamaWaliPasienActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNamaWaliPasienActionPerformed
+
+    private void txtNamaPenjaminPasienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNamaPenjaminPasienActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNamaPenjaminPasienActionPerformed
+
+    private void txtShiftPetugasPasienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtShiftPetugasPasienActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtShiftPetugasPasienActionPerformed
+
+    private void tableDataPasienMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tableDataPasienMouseClicked
+        // TODO add your handling code here:
+        int i = tableDataPasien.getSelectedRow();
+        if (i == -1) {
+            return;
+        }
+        String nama_pasien = (String) model.getValueAt(i, 0);
+        String kartu_identitas_pasien = (String) model.getValueAt(i, 1);
+        String no_kartu_identitas_pasien = (String) model.getValueAt(i, 2);
+        String jenis_kelamin_pasien = (String) model.getValueAt(i, 3);
+        String tempat_tanggal_lahir_pasien = (String) model.getValueAt(i, 4);
+        String status_pasien = (String) model.getValueAt(i, 5);
+        String nama_wali_pasien = (String) model.getValueAt(i, 6);
+        String no_telp_pasien = (String) model.getValueAt(i, 7);
+        String nama_penjamin_pasien, no_telp_penjamin_pasien, nama_petugas_pasien, shift_petugas_pasien, check_up_pasien, dokter_pasien, jenis_rawat_pasien;
+        
+        
+        
+        try {
+            Connection c = konek.getKoneksi();
+            Statement s = c.createStatement();
+            
+            String sql = "SELECT namaPenjaminPasien,noTelpPenjaminPasien,namaPetugasPasien,shiftPetugasPasien,checkUpPasien,dokterPasien,jenisKelaminPasien FROM "
+                        + "dbDataPasien WHERE kartuIdentitasPasien = '" + kartu_identitas_pasien +"'";
+            
+            ResultSet rs = s.executeQuery(sql);
+            
+            while (rs.next()) {
+                Object[] obj = new Object[7];
+                
+                
+            }
+            
+         
+        } catch (Exception e) {
+        }
+    }//GEN-LAST:event_tableDataPasienMouseClicked
+
+    private void btnCariActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCariActionPerformed
+        // TODO add your handling code here:
+        String cariData = txtSearch.getText();
+        loadData(cariData);
+    }//GEN-LAST:event_btnCariActionPerformed
+
+    private void txtSearchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSearchKeyReleased
+        // TODO add your handling code here:
+        String cariData = txtSearch.getText();
+        loadData(cariData);
+    }//GEN-LAST:event_txtSearchKeyReleased
+
+    private void txtNamaPetugasPasienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNamaPetugasPasienActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNamaPetugasPasienActionPerformed
     
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCari;
     private javax.swing.JButton btnSubmit;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup2;
@@ -647,6 +737,7 @@ public class FormData extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtNoKartuIdentitasPasien;
     private javax.swing.JTextField txtNoTelpPasien;
     private javax.swing.JTextField txtNoTelpPenjaminPasien;
+    private javax.swing.JTextField txtSearch;
     private javax.swing.JTextField txtShiftPetugasPasien;
     private javax.swing.JTextField txtTempatTanggalLahirPasien;
     // End of variables declaration//GEN-END:variables
