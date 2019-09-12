@@ -70,7 +70,7 @@ public class Form_Utama extends javax.swing.JFrame {
 
         jLabel4.setBackground(new java.awt.Color(204, 204, 204));
         jLabel4.setFont(new java.awt.Font("Bookman Old Style", 1, 10)); // NOI18N
-        jLabel4.setText("Created By : dev");
+        jLabel4.setText("Created By : mr.x");
 
         javax.swing.GroupLayout pnl_headerLayout = new javax.swing.GroupLayout(pnl_header);
         pnl_header.setLayout(pnl_headerLayout);
@@ -299,7 +299,7 @@ public class Form_Utama extends javax.swing.JFrame {
 
     private void btnTestConActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTestConActionPerformed
         // TODO add your handling code here:
-        Connection c = new Koneksi().getKoneksi();
+        Connection c = new koneksi().getKoneksi();
     }//GEN-LAST:event_btnTestConActionPerformed
 
     /**

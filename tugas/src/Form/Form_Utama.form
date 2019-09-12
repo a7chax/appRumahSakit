@@ -119,7 +119,7 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Bookman Old Style" size="10" style="1"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Created By : dev"/>
+            <Property name="text" type="java.lang.String" value="Created By : mr.x"/>
           </Properties>
         </Component>
       </SubComponents>

@@ -18,12 +18,12 @@ public class koneksi {
     
     public Connection getKoneksi(){
         try {
-            c = DriverManager.getConnection(
-                "jdbc:mysql:/localhost/appPasienRawatJalan","root","asusa442u");
+            c = DriverManager.getConnection("jdbc:mysql://localhost/appPasienRawatJalan?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC",
+                    "root","asusa442u");
             
-            JOptionPane.showMessageDialog(
-                    null, "Koneksi berasil","Status koneksi", 
-                    JOptionPane.INFORMATION_MESSAGE);
+//            JOptionPane.showMessageDialog(
+//                    null, "Koneksi berasil","Status koneksi", 
+//                    JOptionPane.INFORMATION_MESSAGE);
             
         } catch (SQLException e) {
             e.printStackTrace();
