@@ -184,7 +184,7 @@ public class FormData extends javax.swing.JInternalFrame {
 
         jLabel9.setText("No. Telp");
 
-        jComboJenisKelaminPasien.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pria", "Wanita", " " }));
+        jComboJenisKelaminPasien.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pria", "Wanita" }));
 
         txtTempatTanggalLahirPasien.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -372,7 +372,7 @@ public class FormData extends javax.swing.JInternalFrame {
             }
         });
 
-        jComboJenisRawatPasien.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jComboJenisRawatPasien.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Rawat inap", "One day care", "Rawat jalan" }));
 
         rButtonUmum.setText("Umum");
 
@@ -489,7 +489,6 @@ public class FormData extends javax.swing.JInternalFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addComponent(jButton2)
                         .addGap(74, 74, 74)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jButton3)
@@ -505,7 +504,7 @@ public class FormData extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnCari)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 495, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 501, Short.MAX_VALUE))
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addGap(272, 272, 272)
@@ -604,7 +603,7 @@ public class FormData extends javax.swing.JInternalFrame {
             
             p.executeUpdate();
             
-        } catch (SQLException e) {
+        } catch(SQLException e) {
             System.out.println("Gagal Input data");
         }finally{
             JOptionPane.showMessageDialog(rootPane,
@@ -653,20 +652,55 @@ public class FormData extends javax.swing.JInternalFrame {
             Connection c = konek.getKoneksi();
             Statement s = c.createStatement();
             
-            String sql = "SELECT namaPenjaminPasien,noTelpPenjaminPasien,namaPetugasPasien,shiftPetugasPasien,checkUpPasien,dokterPasien,jenisKelaminPasien FROM "
+            String sql = "SELECT namaPenjaminPasien,noTelpPenjaminPasien,namaPetugasPasien,shiftPetugasPasien,checkUpPasien,dokterPasien,jenisRawatPasien FROM "
                         + "dbDataPasien WHERE kartuIdentitasPasien = '" + kartu_identitas_pasien +"'";
             
             ResultSet rs = s.executeQuery(sql);
             
             while (rs.next()) {
                 Object[] obj = new Object[7];
+                nama_penjamin_pasien = rs.getString("namaPenjaminPasien");
+                no_telp_penjamin_pasien = rs.getString("noTelpPenjaminPasien");
+                nama_petugas_pasien = rs.getString("namaPetugasPasien");
+                shift_petugas_pasien = rs.getString("shiftPetugasPasien");
+                check_up_pasien = rs.getString("checkUpPasien");
                 
+                
+                if (check_up_pasien.equals("Umum")) {
+                    rButtonUmum.setSelected(true);
+                    rButtonUGD.setSelected(false);
+                    rButtonLab.setSelected(false);
+                } else if(check_up_pasien.equals("UGD")){
+                    rButtonUGD.setSelected(true);
+                    rButtonUmum.setSelected(false);
+                    rButtonLab.setSelected(false);
+                } else {
+                    rButtonLab.setSelected(true);
+                    rButtonUmum.setSelected(false);
+                    rButtonUGD.setSelected(false);
+                }
+                
+                dokter_pasien = rs.getString("dokterPasien");
+                jenis_rawat_pasien = rs.getString("jenisRawatPasien");
+                
+                jComboJenisRawatPasien.setSelectedItem(jenis_rawat_pasien);
                 
             }
             
          
-        } catch (Exception e) {
-        }
+        } catch(SQLException e) {
+            System.err.println("gagal" + e);
+        } 
+        
+        txtNamaPasien.setText(nama_pasien);
+        txtKartuIdentitasPasien.setText(kartu_identitas_pasien);
+        txtNoKartuIdentitasPasien.setText(no_kartu_identitas_pasien);
+        jComboJenisKelaminPasien.setSelectedItem(jenis_kelamin_pasien);
+        txtTempatTanggalLahirPasien.setText(tempat_tanggal_lahir_pasien);
+        jComboStatusPasien.setSelectedItem(status_pasien);
+        txtNamaWaliPasien.setText(nama_wali_pasien);
+        txtNoTelpPasien.setText(no_telp_pasien);
+             
     }//GEN-LAST:event_tableDataPasienMouseClicked
 
     private void btnCariActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCariActionPerformed
