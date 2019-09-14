@@ -134,12 +134,13 @@ public class FormData extends javax.swing.JInternalFrame {
         rButtonLab = new javax.swing.JRadioButton();
         rButtonUGD = new javax.swing.JRadioButton();
         btnSubmit = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btnEdit = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tableDataPasien = new javax.swing.JTable();
         txtSearch = new javax.swing.JTextField();
         btnCari = new javax.swing.JButton();
+        btnHapus = new javax.swing.JButton();
 
         jLabel11.setText("jLabel11");
 
@@ -442,7 +443,12 @@ public class FormData extends javax.swing.JInternalFrame {
             }
         });
 
-        jButton2.setText("Menu");
+        btnEdit.setText("Edit");
+        btnEdit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditActionPerformed(evt);
+            }
+        });
 
         jButton3.setText("Batal");
 
@@ -478,6 +484,13 @@ public class FormData extends javax.swing.JInternalFrame {
             }
         });
 
+        btnHapus.setText("Hapus");
+        btnHapus.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHapusActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -487,13 +500,15 @@ public class FormData extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jButton2)
+                        .addComponent(btnEdit)
                         .addGap(74, 74, 74)))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jButton3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnSubmit))
+                        .addComponent(btnSubmit)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnHapus))
                     .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -531,7 +546,8 @@ public class FormData extends javax.swing.JInternalFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jButton3)
                             .addComponent(btnSubmit)
-                            .addComponent(jButton2))
+                            .addComponent(btnEdit)
+                            .addComponent(btnHapus))
                         .addContainerGap(174, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -665,7 +681,7 @@ public class FormData extends javax.swing.JInternalFrame {
                 shift_petugas_pasien = rs.getString("shiftPetugasPasien");
                 check_up_pasien = rs.getString("checkUpPasien");
                 
-                
+  
                 if (check_up_pasien.equals("Umum")) {
                     rButtonUmum.setSelected(true);
                     rButtonUGD.setSelected(false);
@@ -718,15 +734,102 @@ public class FormData extends javax.swing.JInternalFrame {
     private void txtNamaPetugasPasienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNamaPetugasPasienActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNamaPetugasPasienActionPerformed
+
+    private void btnEditActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditActionPerformed
+        // TODO add your handling code here:
+        //GEN-FIRST : btnUbahActionPerformed
+        String nama_pasien = txtNamaPasien.getText();
+        String kartu_identitas_pasien = txtKartuIdentitasPasien.getText();
+        String no_kartu_identitas_pasien = txtNoKartuIdentitasPasien.getText();
+        String jenis_kelamin_pasien = (String) jComboJenisKelaminPasien.getSelectedItem();
+        String tempat_tanggal_lahir_pasien = txtTempatTanggalLahirPasien.getText();
+        String status_pasien = (String) jComboStatusPasien.getSelectedItem();
+        String nama_wali_pasien = txtNamaWaliPasien.getText();
+        String no_telp_pasien = txtNoTelpPasien.getText();
+        String nama_penjamin_pasien = txtNamaPenjaminPasien.getText();
+        String no_telp_penjamin_pasien = txtNoTelpPenjaminPasien.getText();
+        String nama_petugas_pasien = txtNamaPetugasPasien.getText();
+        String shift_petugas_pasien = txtShiftPetugasPasien.getText();
+       
+        String  check_up_pasien = "";
+            if(rButtonUmum.isSelected()){
+                check_up_pasien = "Umum";
+            } else if(rButtonLab.isSelected()){
+                check_up_pasien = "Lab";
+            } else if(rButtonUGD.isSelected()){
+                check_up_pasien = "UGD";
+            }
+        String dokter_pasien = txtDokterPasien.getText();
+        String jenis_rawat_pasien = (String) jComboJenisRawatPasien.getSelectedItem();
+        
+        try {
+            Connection c = konek.getKoneksi();
+            Statement s = c.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
+                    ResultSet.CONCUR_READ_ONLY);
+            
+                    String sql = "UPDATE dbDataPasien SET "
+                            + "`namaPasien`=?,"
+                            + "`noKartuIdentitasPasien`=?,"
+                            + "`jenisKelaminPasien`=?,"
+                            + "`tempatTanggalLahirPasien`=?,"
+                            + "`statusPasien`=?,"
+                            + "`namaWaliPasien`=?,"
+                            + "`noTelpPasien`=?,"
+                            + "`namaPenjaminPasien`=?,"
+                            + "`noTelpPenjaminPasien`=?,"
+                            + "`namaPetugasPasien`=?,"
+                            + "`shiftPetugasPasien`=?,"
+                            + "`checkUpPasien`=?,"
+                            + "`dokterPasien`=?,"
+                            + "`jenisRawatPasien`=? WHERE kartuIdentitasPasien=?";
+                    try(PreparedStatement p = c.prepareStatement(sql)){
+                        p.setString(1, nama_pasien);
+                        p.setString(2, no_kartu_identitas_pasien);
+                        p.setString(3, jenis_kelamin_pasien);
+                        p.setString(4, tempat_tanggal_lahir_pasien);
+                        p.setString(5, status_pasien);
+                        p.setString(6, nama_wali_pasien);
+                        p.setString(7, no_telp_pasien);
+                        p.setString(8, nama_penjamin_pasien);
+                        p.setString(9, no_telp_penjamin_pasien);
+                        p.setString(10, nama_petugas_pasien);
+                        p.setString(11, shift_petugas_pasien);
+                        p.setString(12, check_up_pasien);
+                        p.setString(13, dokter_pasien);
+                        p.setString(14, jenis_rawat_pasien);
+                        p.setString(15, kartu_identitas_pasien);
+                        
+                        p.executeUpdate();
+                    
+                    }
+                    
+        } catch (SQLException e) {
+            System.err.println("Error saat menyimpan data : \n" + e);
+        } finally{
+//            JOptionPane.showMessageDialog(rootPane, "Data berhasil disimpan",JOptionPane.CLOSED_OPTION);
+            
+            loadData("");
+        }
+    }//GEN-LAST:event_btnEditActionPerformed
+
+    private void btnHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHapusActionPerformed
+        // TODO add your handling code here:
+        Connection c = konek.getKoneksi();
+        
+        String sql = "DELETE FROM dbDataPasien WHERE kartuIdentitasPasien=?";
+        
+        
+    }//GEN-LAST:event_btnHapusActionPerformed
     
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCari;
+    private javax.swing.JButton btnEdit;
+    private javax.swing.JButton btnHapus;
     private javax.swing.JButton btnSubmit;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup2;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JComboBox<String> jComboJenisKelaminPasien;
