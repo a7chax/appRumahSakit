@@ -700,6 +700,11 @@ public class FormData extends javax.swing.JInternalFrame {
                 jenis_rawat_pasien = rs.getString("jenisRawatPasien");
                 
                 jComboJenisRawatPasien.setSelectedItem(jenis_rawat_pasien);
+                txtNamaPenjaminPasien.setText(nama_penjamin_pasien);
+                txtNoTelpPenjaminPasien.setText(no_telp_penjamin_pasien);
+                txtNamaPetugasPasien.setText(nama_petugas_pasien);
+                txtShiftPetugasPasien.setText(shift_petugas_pasien);
+                txtDokterPasien.setText(dokter_pasien);
                 
             }
             
@@ -814,10 +819,28 @@ public class FormData extends javax.swing.JInternalFrame {
 
     private void btnHapusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHapusActionPerformed
         // TODO add your handling code here:
-        Connection c = konek.getKoneksi();
+        String kartu_identitas_pasien = txtKartuIdentitasPasien.getText();
+        int i = JOptionPane.showConfirmDialog(rootPane, "Apakah ingin menghapus data ?", 
+                "konfirmasi hapus", JOptionPane.OK_CANCEL_OPTION);
         
-        String sql = "DELETE FROM dbDataPasien WHERE kartuIdentitasPasien=?";
-        
+        if (i == 0) {
+            try {
+                Connection c = konek.getKoneksi();
+                Statement s = c.createStatement(ResultSet.TYPE_SCROLL_INSENSITIVE,
+                        ResultSet.CONCUR_READ_ONLY);
+                
+                String sql = "DELETE FROM dbDataPasien WHERE kartuIdentitasPasien=?";
+                
+                try(PreparedStatement p = c.prepareStatement(sql)){
+                    p.setString(1, kartu_identitas_pasien);
+                    p.executeUpdate();
+                }
+            } catch (SQLException e) {
+                System.err.println("Error saat menghapus data: \n " + e);
+            } finally {
+                loadData("");
+            }
+        }
         
     }//GEN-LAST:event_btnHapusActionPerformed
     
