@@ -173,23 +173,30 @@
                       <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="txtNamaWaliPasien" alignment="1" max="32767" attributes="0"/>
                       <Group type="102" attributes="0">
+                          <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jComboJenisKelaminPasien" min="-2" pref="100" max="-2" attributes="0"/>
-                              <Group type="103" alignment="0" groupAlignment="1" attributes="0">
-                                  <Component id="txtNamaPasien" alignment="1" min="-2" pref="152" max="-2" attributes="0"/>
-                                  <Component id="txtKartuIdentitasPasien" min="-2" pref="152" max="-2" attributes="0"/>
-                                  <Component id="txtNoKartuIdentitasPasien" alignment="1" min="-2" pref="152" max="-2" attributes="0"/>
+                              <Component id="txtNamaWaliPasien" alignment="1" max="32767" attributes="0"/>
+                              <Group type="102" attributes="0">
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="jComboJenisKelaminPasien" min="-2" pref="100" max="-2" attributes="0"/>
+                                      <Group type="103" alignment="0" groupAlignment="1" attributes="0">
+                                          <Component id="txtNamaPasien" alignment="1" min="-2" pref="152" max="-2" attributes="0"/>
+                                          <Component id="txtKartuIdentitasPasien" min="-2" pref="152" max="-2" attributes="0"/>
+                                          <Component id="txtNoKartuIdentitasPasien" alignment="1" min="-2" pref="152" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Component id="jComboStatusPasien" alignment="0" min="-2" pref="99" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                               </Group>
-                              <Component id="txtTempatTanggalLahirPasien" alignment="0" min="-2" pref="152" max="-2" attributes="0"/>
-                              <Component id="jComboStatusPasien" alignment="0" min="-2" pref="99" max="-2" attributes="0"/>
+                              <Component id="txtNoTelpPasien" max="32767" attributes="0"/>
                           </Group>
-                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       </Group>
-                      <Component id="txtNoTelpPasien" max="32767" attributes="0"/>
+                      <Group type="102" attributes="0">
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="txtTempatTanggalLahirPasien" max="32767" attributes="0"/>
+                      </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
@@ -219,11 +226,16 @@
                       <Component id="jComboJenisKelaminPasien" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="txtTempatTanggalLahirPasien" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jLabel6" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" attributes="0">
+                          <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="1" attributes="0">
+                          <Component id="txtTempatTanggalLahirPasien" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
+                      </Group>
                   </Group>
-                  <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jLabel7" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jComboStatusPasien" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -303,11 +315,6 @@
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
           </AuxValues>
         </Component>
-        <Component class="javax.swing.JTextField" name="txtTempatTanggalLahirPasien">
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtTempatTanggalLahirPasienActionPerformed"/>
-          </Events>
-        </Component>
         <Component class="javax.swing.JComboBox" name="jComboStatusPasien">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
@@ -327,6 +334,8 @@
           </Events>
         </Component>
         <Component class="javax.swing.JTextField" name="txtNoTelpPasien">
+        </Component>
+        <Component class="com.toedter.calendar.JDateChooser" name="txtTempatTanggalLahirPasien">
         </Component>
       </SubComponents>
     </Container>

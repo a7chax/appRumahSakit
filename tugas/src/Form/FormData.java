@@ -18,6 +18,14 @@ public class FormData extends javax.swing.JInternalFrame {
     
     DefaultTableModel model;
     koneksi konek = new koneksi();
+    
+    Date tglSekarang = new Date();
+    
+    //menentukan format tanggal
+    SimpleDateFormat formatTgl = new
+        SimpleDateFormat("yyyy-MM-dd");
+
+    
     /**
      * Creates new form FormData
      */
@@ -108,10 +116,10 @@ public class FormData extends javax.swing.JInternalFrame {
         txtKartuIdentitasPasien = new javax.swing.JTextField();
         txtNoKartuIdentitasPasien = new javax.swing.JTextField();
         jComboJenisKelaminPasien = new javax.swing.JComboBox<>();
-        txtTempatTanggalLahirPasien = new javax.swing.JTextField();
         jComboStatusPasien = new javax.swing.JComboBox<>();
         txtNamaWaliPasien = new javax.swing.JTextField();
         txtNoTelpPasien = new javax.swing.JTextField();
+        txtTempatTanggalLahirPasien = new com.toedter.calendar.JDateChooser();
         jPanel2 = new javax.swing.JPanel();
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
@@ -187,12 +195,6 @@ public class FormData extends javax.swing.JInternalFrame {
 
         jComboJenisKelaminPasien.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Pria", "Wanita" }));
 
-        txtTempatTanggalLahirPasien.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtTempatTanggalLahirPasienActionPerformed(evt);
-            }
-        });
-
         jComboStatusPasien.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Belum menikah", "Menikah" }));
 
         txtNamaWaliPasien.addActionListener(new java.awt.event.ActionListener() {
@@ -215,20 +217,24 @@ public class FormData extends javax.swing.JInternalFrame {
                     .addComponent(jLabel7)
                     .addComponent(jLabel9)
                     .addComponent(jLabel8))
-                .addGap(20, 20, 20)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtNamaWaliPasien, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(20, 20, 20)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jComboJenisKelaminPasien, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addComponent(txtNamaPasien, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(txtKartuIdentitasPasien, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(txtNoKartuIdentitasPasien, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(txtTempatTanggalLahirPasien, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jComboStatusPasien, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(txtNoTelpPasien))
+                            .addComponent(txtNamaWaliPasien, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jComboJenisKelaminPasien, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(txtNamaPasien, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(txtKartuIdentitasPasien, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(txtNoKartuIdentitasPasien, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jComboStatusPasien, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(txtNoTelpPasien)))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(txtTempatTanggalLahirPasien, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -251,10 +257,13 @@ public class FormData extends javax.swing.JInternalFrame {
                     .addComponent(jLabel5)
                     .addComponent(jComboJenisKelaminPasien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtTempatTanggalLahirPasien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel6))
-                .addGap(10, 10, 10)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel6)
+                        .addGap(19, 19, 19))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(txtTempatTanggalLahirPasien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
                     .addComponent(jComboStatusPasien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -572,7 +581,7 @@ public class FormData extends javax.swing.JInternalFrame {
         String kartu_identitas_pasien = txtKartuIdentitasPasien.getText();
         String no_kartu_identitas_pasien = txtNoKartuIdentitasPasien.getText();
         String jenis_kelamin_pasien = String.valueOf(jComboJenisKelaminPasien.getSelectedItem());
-        String tempat_tanggal_lahir_pasien = txtTempatTanggalLahirPasien.getText();
+        String tempat_tanggal_lahir_pasien = formatTgl.format(txtTempatTanggalLahirPasien.getDate());
         String status_pasien =  String.valueOf(jComboStatusPasien.getSelectedItem());
         String nama_wali_pasien = txtNamaWaliPasien.getText();
         String no_telp_pasien = txtNoTelpPasien.getText();
@@ -629,10 +638,6 @@ public class FormData extends javax.swing.JInternalFrame {
                     loadData("");
         }
     }//GEN-LAST:event_btnSubmitActionPerformed
-
-    private void txtTempatTanggalLahirPasienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTempatTanggalLahirPasienActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtTempatTanggalLahirPasienActionPerformed
 
     private void txtNamaWaliPasienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNamaWaliPasienActionPerformed
         // TODO add your handling code here:
@@ -717,7 +722,7 @@ public class FormData extends javax.swing.JInternalFrame {
         txtKartuIdentitasPasien.setText(kartu_identitas_pasien);
         txtNoKartuIdentitasPasien.setText(no_kartu_identitas_pasien);
         jComboJenisKelaminPasien.setSelectedItem(jenis_kelamin_pasien);
-        txtTempatTanggalLahirPasien.setText(tempat_tanggal_lahir_pasien);
+        txtTempatTanggalLahirPasien.setDate(tempat_tanggal_lahir_pasien);
         jComboStatusPasien.setSelectedItem(status_pasien);
         txtNamaWaliPasien.setText(nama_wali_pasien);
         txtNoTelpPasien.setText(no_telp_pasien);
@@ -747,7 +752,7 @@ public class FormData extends javax.swing.JInternalFrame {
         String kartu_identitas_pasien = txtKartuIdentitasPasien.getText();
         String no_kartu_identitas_pasien = txtNoKartuIdentitasPasien.getText();
         String jenis_kelamin_pasien = (String) jComboJenisKelaminPasien.getSelectedItem();
-        String tempat_tanggal_lahir_pasien = txtTempatTanggalLahirPasien.getText();
+        String tempat_tanggal_lahir_pasien = formatTgl.format(txtTempatTanggalLahirPasien);
         String status_pasien = (String) jComboStatusPasien.getSelectedItem();
         String nama_wali_pasien = txtNamaWaliPasien.getText();
         String no_telp_pasien = txtNoTelpPasien.getText();
@@ -899,6 +904,6 @@ public class FormData extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtNoTelpPenjaminPasien;
     private javax.swing.JTextField txtSearch;
     private javax.swing.JTextField txtShiftPetugasPasien;
-    private javax.swing.JTextField txtTempatTanggalLahirPasien;
+    private com.toedter.calendar.JDateChooser txtTempatTanggalLahirPasien;
     // End of variables declaration//GEN-END:variables
 }
