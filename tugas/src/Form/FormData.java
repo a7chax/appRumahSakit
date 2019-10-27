@@ -5,9 +5,18 @@
  */
 package Form;
 
-import javax.swing.table.DefaultTableModel;
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 
 /**
@@ -662,6 +671,18 @@ public class FormData extends javax.swing.JInternalFrame {
         String no_kartu_identitas_pasien = (String) model.getValueAt(i, 2);
         String jenis_kelamin_pasien = (String) model.getValueAt(i, 3);
         String tempat_tanggal_lahir_pasien = (String) model.getValueAt(i, 4);
+            
+            Date tanggal = null;
+                try {
+                    tanggal = new SimpleDateFormat("yyyy-MM-dd")
+                            .parse(tempat_tanggal_lahir_pasien);
+                } catch (ParseException ex) {
+                    Logger.getLogger(FormData.class.getName())
+                            .log(Level.SEVERE, null, ex);
+                }
+                //menampilkan tanggal ke jcalendar
+                txtTempatTanggalLahirPasien.setDate(tanggal);
+                
         String status_pasien = (String) model.getValueAt(i, 5);
         String nama_wali_pasien = (String) model.getValueAt(i, 6);
         String no_telp_pasien = (String) model.getValueAt(i, 7);
@@ -722,7 +743,7 @@ public class FormData extends javax.swing.JInternalFrame {
         txtKartuIdentitasPasien.setText(kartu_identitas_pasien);
         txtNoKartuIdentitasPasien.setText(no_kartu_identitas_pasien);
         jComboJenisKelaminPasien.setSelectedItem(jenis_kelamin_pasien);
-        txtTempatTanggalLahirPasien.setDate(tempat_tanggal_lahir_pasien);
+        txtTempatTanggalLahirPasien.setDate(tanggal);
         jComboStatusPasien.setSelectedItem(status_pasien);
         txtNamaWaliPasien.setText(nama_wali_pasien);
         txtNoTelpPasien.setText(no_telp_pasien);
@@ -752,7 +773,8 @@ public class FormData extends javax.swing.JInternalFrame {
         String kartu_identitas_pasien = txtKartuIdentitasPasien.getText();
         String no_kartu_identitas_pasien = txtNoKartuIdentitasPasien.getText();
         String jenis_kelamin_pasien = (String) jComboJenisKelaminPasien.getSelectedItem();
-        String tempat_tanggal_lahir_pasien = formatTgl.format(txtTempatTanggalLahirPasien);
+        Date tgl = txtTempatTanggalLahirPasien.getDate();
+        String tempat_tanggal_lahir_pasien = formatTgl.format(tgl);
         String status_pasien = (String) jComboStatusPasien.getSelectedItem();
         String nama_wali_pasien = txtNamaWaliPasien.getText();
         String no_telp_pasien = txtNoTelpPasien.getText();
