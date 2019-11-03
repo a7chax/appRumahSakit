@@ -43,7 +43,7 @@ public class FormData extends javax.swing.JInternalFrame {
         initComponents();
         loadData("");
     }
-    
+    //menampilkan data berdasarkan kata kunci
     private void loadData(String Key){
         model = new DefaultTableModel();
         
@@ -95,7 +95,69 @@ public class FormData extends javax.swing.JInternalFrame {
         }
         
     }
-
+    
+    //menampilkan data 
+    private void loadData(int order){
+        model = new DefaultTableModel();
+        
+        tableDataPasien.setModel(model);
+        
+        model.addColumn("Nama");
+        model.addColumn("Kartu Identitas");
+        model.addColumn("No. kartu identitas");
+        model.addColumn("Jenis Kelamin");
+        model.addColumn("Tempat tanggal lahir");
+        model.addColumn("Status");
+        model.addColumn("Nama Wali");
+        model.addColumn("No.telp");
+        
+        model.getDataVector().removeAllElements();
+        model.fireTableDataChanged();
+        
+        try {
+            Connection c = konek.getKoneksi();
+            Statement s = c.createStatement();
+            
+            String sql = "";
+            
+            switch (order) {
+                case 1: sql = "SELECT * FROM dbDataPasien ORDER BY namaPasien ASC";
+                break;
+                case 2: sql = "SELECT * FROM dbDataPasien ORDER BY namaPasien DESC";
+                break;
+                case 3: sql = "SELECT * FROM dbDataPasien ORDER BY tempatTanggalLahirPasien ASC";
+                break;
+                case 4: sql = "SELECT * FROM dbDataPasien ORDER BY tempatTanggalLahirPasien DESC";
+                break;
+                case 5: sql = "SELECT * FROM dbDataPasien ORDER BY kartuIdentitasPasien ASC";
+                break;
+                default:sql = "SELECT * FROM dbDataPasien";
+                break;
+               
+                
+            }
+                    
+            ResultSet rs = s.executeQuery(sql);
+            
+            while (rs.next()) {                
+                Object[] obj = new Object[8];
+                
+                obj[0] = rs.getString("namaPasien");
+                obj[1] = rs.getString("kartuIdentitasPasien");
+                obj[2] = rs.getString("noKartuIdentitasPasien");
+                obj[3] = rs.getString("jenisKelaminPasien");
+                obj[4] = rs.getString("tempatTanggalLahirPasien");
+                obj[5] = rs.getString("statusPasien");
+                obj[6] = rs.getString("namaWaliPasien");
+                obj[7] = rs.getString("noTelpPasien");
+                
+                model.addRow(obj);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -158,6 +220,7 @@ public class FormData extends javax.swing.JInternalFrame {
         txtSearch = new javax.swing.JTextField();
         btnCari = new javax.swing.JButton();
         btnHapus = new javax.swing.JButton();
+        cboSortBy = new javax.swing.JComboBox<>();
 
         jLabel11.setText("jLabel11");
 
@@ -509,6 +572,13 @@ public class FormData extends javax.swing.JInternalFrame {
             }
         });
 
+        cboSortBy.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Nama (A - Z)", "Nama (Z - A)", "Tanggal lahir (A - Z)", "Tanggal lahir (Z - A)" }));
+        cboSortBy.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cboSortByActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -536,6 +606,8 @@ public class FormData extends javax.swing.JInternalFrame {
                         .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, 244, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btnCari)
+                        .addGap(44, 44, 44)
+                        .addComponent(cboSortBy, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 501, Short.MAX_VALUE))
                 .addContainerGap())
@@ -571,7 +643,8 @@ public class FormData extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtSearch, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnCari))
+                            .addComponent(btnCari)
+                            .addComponent(cboSortBy, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 484, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(50, 50, 50))))
@@ -870,6 +943,29 @@ public class FormData extends javax.swing.JInternalFrame {
         }
         
     }//GEN-LAST:event_btnHapusActionPerformed
+
+    private void cboSortByActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboSortByActionPerformed
+        // TODO add your handling code here:
+        // TODO add your handling code here:
+        String order = String.valueOf(cboSortBy.getSelectedItem());
+        
+        /**
+         * Nama (A - Z), Nama (Z - A), Tanggal Lahir (A - Z), Tanggal Lahir (Z - A), No. Induk
+         */
+        
+        //memanggil method loadData sesuai kondisi
+        if(order.equals("Nama (A - Z)")){
+            loadData(1);
+        }else if (order.equals("Nama (Z - A)")) {
+            loadData(2);
+        }else if(order.equals("Tanggal lahir (A - Z)")){
+            loadData(3);
+        }else if(order.equals("Tanggal lahir (Z - A)")){
+            loadData(4);
+        }else{
+            loadData(5);
+        }
+    }//GEN-LAST:event_cboSortByActionPerformed
     
     
 
@@ -880,6 +976,7 @@ public class FormData extends javax.swing.JInternalFrame {
     private javax.swing.JButton btnSubmit;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup2;
+    private javax.swing.JComboBox<String> cboSortBy;
     private javax.swing.JButton jButton3;
     private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JComboBox<String> jComboJenisKelaminPasien;
